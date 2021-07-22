@@ -1,0 +1,26 @@
+.movies-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.card-body h1 {
+    font-size: 48px;
+}
+
+@media(min-width: 280px) {
+    .card-body h1 {
+        font-size: 1em;
+    }
+}
+
+@media(min-width: 576px) {
+    .card-body h1 {
+        font-size: 2em;
+    }
+}
+
+@media(min-width: 768px) {
+    .card-body h1 {
+        font-size: 2.5em;
+    }
+}
