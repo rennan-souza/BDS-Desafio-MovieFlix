@@ -11,6 +11,8 @@ export const CLIENT_SECRET =
 
 const tokenKey = "authData";
 
+export type Role = "ROLE_VISITOR" | "ROLE_MEMBER";
+
 type LoginData = {
   username: string;
   password: string;
@@ -19,6 +21,7 @@ type LoginData = {
 export type TokenData = {
   exp: number;
   user_name: string;
+  authorities: Role[];
 };
 
 type LoginResponse = {
@@ -76,3 +79,20 @@ export const isAuthenticated = (): boolean => {
   return tokenData && tokenData.exp * 1000 > Date.now() ? true : false;
 };
 
+export const hasAnyRoles = (roles: Role[]): boolean => {
+  if (roles.length === 0) {
+    return true;
+  }
+
+  const tokenData = getTokenData();
+
+  if (tokenData !== undefined) {
+    for (var i = 0; i < roles.length; i++) {
+      if (tokenData.authorities.includes(roles[i])) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+};
