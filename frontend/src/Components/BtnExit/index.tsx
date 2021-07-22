@@ -35,7 +35,7 @@ const BtnExit = () => {
   return (
     <div>
       {authContextData.autheticated ? (
-        <button className="btn-exit ml-4" onClick={handleLogoutClick}>
+        <button className="btn-exit" onClick={handleLogoutClick}>
           SAIR
         </button>
       ) : (

@@ -13,3 +13,25 @@
   color: #000;
   font-weight: bold;
 }
+
+.user-name {
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+@media(max-width: 576px) {
+  .navbar-container {
+    flex-direction: column;
+  }
+
+  .navbar-container-logged {
+    height: auto;
+  }
+
+  .user-name {
+    margin-left: unset;
+    margin-right: unset;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
