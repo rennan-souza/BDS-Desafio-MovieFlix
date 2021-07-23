@@ -1,12 +1,39 @@
+import { AxiosRequestConfig } from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { ReactComponent as IconStar } from "../../../assets/images/icon-star.svg";
-import { hasAnyRoles } from "../../../util/requests";
+import { Movie } from "../../../types/movie";
+import { hasAnyRoles, requestBackend } from "../../../util/requests";
 import "./styles.css";
 
+type UrlParams = {
+  movieId: string;
+}
+
 const Details = () => {
+
+  const { movieId } = useParams<UrlParams>();
+
+  const [movie, setMovie] = useState<Movie[]>();
+
+
+  useEffect(() => {
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/movies/${movieId}/reviews`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
+      .then((response) => {
+        setMovie(response.data);
+      })
+  }, [movieId]);
+
   return (
     <div className="movies-details-container">
       <div className="movies-details-header">
-        <h1>Tela detalhes do filme id: 1</h1>
+        <h1>Tela detalhes do filme id: {movieId}</h1>
       </div>
       {hasAnyRoles(["ROLE_MEMBER"]) && (
         <div className="card bg-secondary-light shadow mt-3">
@@ -24,18 +51,37 @@ const Details = () => {
           </div>
         </div>
       )}
+
       <div className="card bg-secondary-light shadow mt-3">
         <div className="card-body">
-          <div className="movies-details-coments-header">
-            <IconStar /> <span className="text-white">Maria Silva</span>
+
+        {movie?.map((item) => (
+          <div key={item.id}>
+              <div className="movies-details-coments-header mt-4">
+                <IconStar /> <span className="text-white">{item.user.name}</span>
+              </div>
+              <div className="movies-details-coments-content">
+                <p>
+                  {item.text}
+                </p>
+              </div>
           </div>
-          <div className="movies-details-coments-content">
-            <p>
-              Gostei muito do filme. Foi muito bom mesmo. Pena que durou pouco.
-            </p>
-          </div>
+            
+        ))}
+
+              
+       
+
+              
+
+          
+
+
         </div>
       </div>
+
+     
+  
     </div>
   );
 };
