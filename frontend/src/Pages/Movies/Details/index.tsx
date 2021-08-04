@@ -2,10 +2,11 @@ import { AxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ReactComponent as IconStar } from "../../../assets/images/icon-star.svg";
-import { Movie } from "../../../types/movie";
+import { MovieReview } from "../../../types/movieReview";
 import { hasAnyRoles, requestBackend } from "../../../util/requests";
 import { useForm } from "react-hook-form";
 import "./styles.css";
+import { useCallback } from "react";
 
 type UrlParams = {
   movieId: string;
@@ -18,13 +19,13 @@ type FormData = {
 const Details = () => {
   const { movieId } = useParams<UrlParams>();
 
-  const [movie, setMovie] = useState<Movie[]>();
+  const [movieReview, setMovieReview] = useState<MovieReview[]>();
 
   const [hasError, setHasError] = useState(false);
 
   const [refresh, setRefresh] = useState(false);
 
-  useEffect(() => {
+  const getMovieReviews = useCallback(() => {
     const params: AxiosRequestConfig = {
       method: "GET",
       url: `/movies/${movieId}/reviews`,
@@ -32,9 +33,29 @@ const Details = () => {
     };
 
     requestBackend(params).then((response) => {
-      setMovie(response.data);
+      setMovieReview(response.data);
     });
-  }, [movieId, refresh]);
+  }, [movieId] );
+
+  
+
+  const getMovie = useCallback(() => {
+    const params: AxiosRequestConfig = {
+      method: "GET",
+      url: `/movies/${movieId}`,
+      withCredentials: true,
+    };
+
+    requestBackend(params).then((response) => {
+      console.log(response.data);
+    });
+  }, [movieId] );
+
+
+  useEffect(() => {
+    getMovieReviews();
+    getMovie();
+  }, [refresh, getMovieReviews, getMovie]);
 
   const {
     register,
@@ -75,6 +96,13 @@ const Details = () => {
       <div className="movies-details-header">
         <h1>Tela detalhes do filme id: {movieId}</h1>
       </div>
+
+      <div className="card bg-secondary-light shadow mt-3">
+        <div>
+          <img src="" alt="" />
+        </div>
+      </div>
+
       {hasAnyRoles(["ROLE_MEMBER"]) && (
         <div className="card bg-secondary-light shadow mt-3">
           {hasError && (
@@ -107,7 +135,7 @@ const Details = () => {
 
       <div className="card bg-secondary-light shadow mt-3">
         <div className="card-body">
-          {movie?.map((item) => (
+          {movieReview?.map((item) => (
             <div key={item.id}>
               <div className="movies-details-coments-header mt-4">
                 <IconStar />{" "}

@@ -3,11 +3,6 @@
   padding: 20px;
 }
 
-.movies-details-header h1 {
-  font-size: 24px;
-  color: #fff;
-}
-
 .movies-details-btn-container {
   display: flex;
   align-items: center;

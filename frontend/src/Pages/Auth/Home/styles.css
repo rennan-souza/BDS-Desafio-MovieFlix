@@ -52,5 +52,21 @@
 
     .home-image-content {
         margin-left: 120px;
+        justify-content: center;
+    }
+
+    .home-text-content {
+        align-items: center;
+    }
+}
+
+@media(min-width: 1400px) {
+    .home-image-content {
+        margin-left: 120px;
+        justify-content: flex-end;
+    }
+
+    .home-text-content {
+        align-items: flex-end;
     }
 }

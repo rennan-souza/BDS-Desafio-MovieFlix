@@ -1,7 +1,7 @@
 import { User } from './user';
 
 
-export type Movie = {
+export type MovieReview = {
     id: number;
     text: string;
     movieId: number;

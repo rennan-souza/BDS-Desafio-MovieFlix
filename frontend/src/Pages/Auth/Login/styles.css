@@ -19,6 +19,10 @@
 
 @media(min-width: 1200px) {
     .card-form {
-        padding: 20px 80px 60px 80px;
+        padding: 20px 50px 60px 50px;
+    }
+
+    .card-login {
+        width: 500px;
     }
 }

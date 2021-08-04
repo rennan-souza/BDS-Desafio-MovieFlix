@@ -40,7 +40,7 @@ const Login = () => {
   };
 
   return (
-    <div className="card bg-secondary-light shadow">
+    <div className="card card-login bg-secondary-light shadow">
       <div className="card-body">
         <div className="text-center text-white mt-5 mb-3">
           <h2>LOGIN</h2>
@@ -100,7 +100,7 @@ const Login = () => {
             </div>
           </form>
           <div className="mt-2">
-            <Link to="/auth/signup"><small>Ainda não tem conta? Register</small></Link>
+            <Link to="/auth/signup"><small>Ainda não tem conta? cadastre-se</small></Link>
           </div>
         </div>
       </div>

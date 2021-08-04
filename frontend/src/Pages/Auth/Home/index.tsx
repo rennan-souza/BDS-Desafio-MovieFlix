@@ -25,7 +25,7 @@ const Home = () => {
             <Login />
           </Route>
           <Route path="/auth/signup">
-            <h1>Card de signup</h1>
+            <h1>Card signup</h1>
           </Route>
           <Route path="/auth/recover">
             <h1>Card de recover</h1>
