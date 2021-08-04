@@ -1,3 +1,5 @@
+import "./styles.css";
+
 import { AxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -5,8 +7,9 @@ import { ReactComponent as IconStar } from "../../../assets/images/icon-star.svg
 import { MovieReview } from "../../../types/movieReview";
 import { hasAnyRoles, requestBackend } from "../../../util/requests";
 import { useForm } from "react-hook-form";
-import "./styles.css";
 import { useCallback } from "react";
+import { Movie } from "../../../types/movie";
+import { toast } from 'react-toastify';
 
 type UrlParams = {
   movieId: string;
@@ -20,6 +23,8 @@ const Details = () => {
   const { movieId } = useParams<UrlParams>();
 
   const [movieReview, setMovieReview] = useState<MovieReview[]>();
+
+  const [movie, setMovie] = useState<Movie>();
 
   const [hasError, setHasError] = useState(false);
 
@@ -35,9 +40,7 @@ const Details = () => {
     requestBackend(params).then((response) => {
       setMovieReview(response.data);
     });
-  }, [movieId] );
-
-  
+  }, [movieId]);
 
   const getMovie = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -47,10 +50,9 @@ const Details = () => {
     };
 
     requestBackend(params).then((response) => {
-      console.log(response.data);
+      setMovie(response.data);
     });
-  }, [movieId] );
-
+  }, [movieId]);
 
   useEffect(() => {
     getMovieReviews();
@@ -80,9 +82,9 @@ const Details = () => {
         setRefresh(true);
         reset();
         setHasError(false);
-        alert("Comentário salvo com sucesso");
+        toast.success('Comentário salvo com sucesso');
       })
-      .catch((error) => {
+      .catch(() => {
         setHasError(true);
         setRefresh(false);
       })
@@ -93,18 +95,32 @@ const Details = () => {
 
   return (
     <div className="movies-details-container">
-      <div className="movies-details-header">
-        <h1>Tela detalhes do filme id: {movieId}</h1>
-      </div>
-
-      <div className="card bg-secondary-light shadow mt-3">
-        <div>
-          <img src="" alt="" />
+      <div className="card bg-secondary-light movie-details-card-img-container shadow mt-3">
+        <div className="row">
+          <div className="col-xl-6">
+            <div className="movie-details-img">
+              <img src={movie?.imgUrl} alt={movie?.title} />
+            </div>
+          </div>
+          <div className="col-xl-6">
+            <div className="movie-details-title">
+              <h1>{movie?.title}</h1>
+            </div>
+            <div className="movie-details-year">
+              <h1>{movie?.year}</h1>
+            </div>
+            <div className="movie-details-subtitle">
+              <p>{movie?.subTitle}</p>
+            </div>
+            <div className="movie-details-synopsis-container">
+              <p>{movie?.synopsis}</p>
+            </div>
+          </div>
         </div>
       </div>
 
       {hasAnyRoles(["ROLE_MEMBER"]) && (
-        <div className="card bg-secondary-light shadow mt-3">
+        <div className="card bg-secondary-light movie-details-form-container shadow mt-3">
           {hasError && (
             <div className="alert alert-danger">
               Erro ao salvar o comentário
@@ -133,7 +149,7 @@ const Details = () => {
         </div>
       )}
 
-      <div className="card bg-secondary-light shadow mt-3">
+      <div className="card bg-secondary-light movie-details-reviews-container shadow mt-3">
         <div className="card-body">
           {movieReview?.map((item) => (
             <div key={item.id}>
