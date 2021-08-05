@@ -8,7 +8,7 @@ const Routes = () => (
   <BrowserRouter>
     <Navbar />
     <Switch>
-      <Redirect from="/" to="/auth/login" exact />
+      <Redirect from="/" to="/movies" exact />
       <Redirect from="/auth" to="/auth/login" exact />
       <Route path="/auth">
         <Home />

@@ -1,26 +1,62 @@
 .movies-container {
-    width: 100%;
+  width: 100%;
+  padding: 12px;
+}
+
+.movies-list-select-genre {
+  margin-top: 10px;
+  padding: 5px 20px 5px 20px;
+}
+
+.movies-list-card-container {
+  margin-top: 20px;
+}
+
+.movies-list-img-container img {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.movies-list-description-container {
+  padding: 10px;
+}
+
+.movies-list-description-title {
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: -0.015em;
+  color: #fff;
+}
+
+.movies-list-description-year {
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: -0.015em;
+  color: #ffc700;
+}
+
+.movies-list-description-subtitle {
+  font-size: 14px;
+  letter-spacing: -0.015em;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 576px) {
+  .movies-container {
     padding: 20px;
+  }
 }
 
-.card-body h1 {
-    font-size: 48px;
+@media (min-width: 768px) {
+  .movies-container {
+    padding: 20px 40px;
+  }
 }
 
-@media(min-width: 280px) {
-    .card-body h1 {
-        font-size: 1em;
-    }
-}
-
-@media(min-width: 576px) {
-    .card-body h1 {
-        font-size: 2em;
-    }
-}
-
-@media(min-width: 768px) {
-    .card-body h1 {
-        font-size: 2.5em;
-    }
+@media (min-width: 1400px) {
+  .movies-container {
+    width: 1200px;
+    margin: auto;
+  }
 }
