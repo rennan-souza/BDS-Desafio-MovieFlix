@@ -98,21 +98,16 @@ export const hasAnyRoles = (roles: Role[]): boolean => {
   return false;
 };
 
-
 export const requestBackend = (config: AxiosRequestConfig) => {
   const headers = config.withCredentials
     ? {
         ...config.headers,
-        Authorization: 'Bearer ' + getAuthData().access_token,
+        Authorization: "Bearer " + getAuthData().access_token,
       }
     : config.headers;
 
   return axios({ ...config, baseURL: BASE_URL, headers });
 };
-
-
-
-
 
 // Add a request interceptor
 axios.interceptors.request.use(
@@ -131,7 +126,7 @@ axios.interceptors.response.use(
   },
   function (error) {
     if (error.response.status === 401) {
-      history.push('/movies');
+      history.push("/movies");
     }
 
     return Promise.reject(error);

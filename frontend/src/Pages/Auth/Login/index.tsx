@@ -2,7 +2,11 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, Link } from "react-router-dom";
 import { AuthContext } from "../../../AuthContext";
-import { getTokenData, requestBackendLogin, saveAuthData } from "../../../util/requests";
+import {
+  getTokenData,
+  requestBackendLogin,
+  saveAuthData,
+} from "../../../util/requests";
 import "./styles.css";
 
 type FormData = {
@@ -11,6 +15,8 @@ type FormData = {
 };
 
 const Login = () => {
+  const [loader, setLoader] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -24,9 +30,10 @@ const Login = () => {
   const history = useHistory();
 
   const onSubmit = (formData: FormData) => {
+    setLoader(true);
+    setHasError(false);
     requestBackendLogin(formData)
       .then((response) => {
-        setHasError(false);
         saveAuthData(response.data);
         setAuthContextData({
           autheticated: true,
@@ -35,6 +42,7 @@ const Login = () => {
         history.push("/movies");
       })
       .catch((error) => {
+        setLoader(false);
         setHasError(true);
       });
   };
@@ -88,19 +96,25 @@ const Login = () => {
             {hasError && (
               <div className="alert alert-danger">
                 <small>
-                  Erro ao fazer login, verifique os dados e tente novamente
+                  Email e ou senha inválidos
                 </small>
               </div>
             )}
 
-            <div className="form-group mt-5">
-              <button className="btn btn-lg btn-primary btn-block">
-                <h4>FAZER LOGIN</h4>
-              </button>
+            <div className="form-group mt-4 text-center">
+              {loader ? (
+                <div className="spinner-border text-primary" role="status"></div>
+              ) : (
+                <button className="btn btn-lg btn-primary btn-block">
+                  <h4>FAZER LOGIN</h4>
+                </button>
+              )}
             </div>
           </form>
           <div className="mt-2">
-            <Link to="/auth/signup"><small>Ainda não tem conta? cadastre-se</small></Link>
+            <Link to="/auth/signup">
+              <small>Ainda não tem conta? cadastre-se</small>
+            </Link>
           </div>
         </div>
       </div>

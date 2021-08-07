@@ -1,0 +1,26 @@
+.movies-list-select-container {
+  width: 255px;
+}
+
+.movies-list-genres-select__control {
+  background: #6c6c6c !important;
+  font-size: 1em;
+  letter-spacing: -0.015em;
+  color: #fff !important;
+  border: 1px solid #e1e1e1 !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+.movies-list-genres-select__placeholder {
+  color: #9e9e9e !important;
+}
+
+.movies-list-genres-select__indicator-separator {
+  display: none;
+}
+
+.movies-list-genres-select__select-container {
+  color: red !important;
+  width: 300px !important;
+}
